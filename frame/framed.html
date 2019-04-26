@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<meta charset="UTF-8"> 
+<body>
+    <script>
+        // retrieve the parent
+        var frame = parent.document.getElementById('myFrame');
+        var token = frame.getAttribute('data-token');
+        
+        alert('The token is: ' + token);
+
+        // clear the token again
+        frame.setAttribute('data-token', '');
+    </script>
+</body>
