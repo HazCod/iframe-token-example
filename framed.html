@@ -19,7 +19,7 @@
 
             // check who's sent it
             if (e.origin != masterOrigin) { return; }
-            
+
             // check the command
             if (parts[0] != 'doccleToken') { return; }
 
@@ -27,7 +27,7 @@
             token = atob(parts[1]);
 
             // use the token
-            alert('We received token: ' + token);
+            console.log('We received token: ' + token);
         });
     </script>
 </body>
