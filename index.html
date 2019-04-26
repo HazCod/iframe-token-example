@@ -1,5 +1,19 @@
 <!DOCTYPE html>
 <meta charset="UTF-8"> 
 <body>
-    <iframe id="myFrame" data-token="mysecrettoken" src="frame/framed.html" sandbox="allow-scripts allow-same-origin"></iframe>
+    <iframe id="myFrame" src="http://localhost:2015/frame/framed.html"></iframe>
+
+    <script>
+    var doccleFrame = document.getElementById('myFrame');
+
+    // Send a message to the child iframe with the encoded token
+    var sendDoccleToken = function(token) {
+        doccleFrame.contentWindow.postMessage('doccleToken:' + btoa(token), 'http://localhost:2015');
+    };
+
+    // when iframe is ready, sent our token
+    doccleFrame.onload = function() {
+        sendDoccleToken('mysecrettokendksfn--::sdfsmndfns/');
+    };
+    </script>
 </body>

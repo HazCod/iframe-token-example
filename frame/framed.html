@@ -2,13 +2,30 @@
 <meta charset="UTF-8"> 
 <body>
     <script>
-        // retrieve the parent
-        var frame = parent.document.getElementById('myFrame');
-        var token = frame.getAttribute('data-token');
-        
-        alert('The token is: ' + token);
+        // addEventListener support for IE8
+        function bindEvent(element, eventName, eventHandler) {
+            if (element.addEventListener) {
+                element.addEventListener(eventName, eventHandler, false);
+            } else if (element.attachEvent) {
+                element.attachEvent('on' + eventName, eventHandler);
+            }
+        }
 
-        // clear the token again
-        frame.setAttribute('data-token', '');
+        // Listen to messages from parent window
+        bindEvent(window, 'message', function (e) {
+            parts = String(e.data).split(':');
+
+            // check who's sent it
+            if (e.origin != "http://localhost:2015") { return; }
+            
+            // check the command
+            if (parts[0] != 'doccleToken') { return; }
+
+            // decode the token
+            token = atob(parts[1]);
+
+            // use the token
+            alert('We received token: ' + token);
+        });
     </script>
 </body>
