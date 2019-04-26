@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <meta charset="UTF-8"> 
 <body>
-    <iframe id="myFrame" src="http://localhost:2015/frame/framed.html"></iframe>
+    <iframe id="myFrame" src="http://localhost:2000/framed.html"></iframe>
 
     <script>
+    var myConfidentialToken = 'mysecrettokendksfn--::sdfsmndfns/';
+
+    var doccleOrigin = 'http://localhost:2000';
     var doccleFrame = document.getElementById('myFrame');
 
     // Send a message to the child iframe with the encoded token
     var sendDoccleToken = function(token) {
-        doccleFrame.contentWindow.postMessage('doccleToken:' + btoa(token), 'http://localhost:2015');
+        // without iframe sandbox, we are the same origin (framer and framed)
+        // with iframe sandbox turned on, cross-origin messaging will not be allowed without postMessage(.., '*') which will send it to every origin in the iframe
+        doccleFrame.contentWindow.postMessage('doccleToken:' + btoa(token), location.origin);
     };
 
-    // when iframe is ready, sent our token
+    // when iframe is ready, send our token
     doccleFrame.onload = function() {
-        sendDoccleToken('mysecrettokendksfn--::sdfsmndfns/');
+        sendDoccleToken(myConfidentialToken);
     };
     </script>
 </body>
